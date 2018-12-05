@@ -23,17 +23,12 @@ function start () {
 
   cp -a $(type -p nova-placement-api) /var/www/cgi-bin/nova/
 
-  if [ -f /etc/apache2/envvars ]; then
-     # Loading Apache2 ENV variables
-     source /etc/apache2/envvars
-  fi
-
-  # Start Apache2
-  exec apache2 -DFOREGROUND
+  # Start Httpd
+  exec httpd -DFOREGROUND
 }
 
 function stop () {
-  apachectl -k graceful-stop
+  httpd -k graceful-stop
 }
 
 $COMMAND
