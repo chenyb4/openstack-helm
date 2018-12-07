@@ -18,8 +18,9 @@ limitations under the License.
 {{- $serviceName := "nova" -}}
 {{- $dbSvc := dict "adminSecret" .Values.secrets.oslo_db.admin "configFile" (printf "/etc/%s/%s.conf" $serviceName $serviceName ) "logConfigFile" (printf "/etc/%s/logging.conf" $serviceName ) "configDbSection" "database" "configDbKey" "connection" -}}
 {{- $dbApi := dict "adminSecret" .Values.secrets.oslo_db.admin "configFile" (printf "/etc/%s/%s.conf" $serviceName $serviceName ) "logConfigFile" (printf "/etc/%s/logging.conf" $serviceName ) "configDbSection" "api_database" "configDbKey" "connection" -}}
+{{- $dbPlacement := dict "adminSecret" .Values.secrets.oslo_db.admin "configFile" (printf "/etc/%s/%s.conf" $serviceName $serviceName ) "logConfigFile" (printf "/etc/%s/logging.conf" $serviceName ) "configDbSection" "placement_database" "configDbKey" "connection" -}}
 {{- $dbCell := dict "adminSecret" .Values.secrets.oslo_db.admin "configFile" (printf "/etc/%s/%s.conf" $serviceName $serviceName ) "logConfigFile" (printf "/etc/%s/logging.conf" $serviceName ) "configDbSection" "cell0_database" "configDbKey" "connection" -}}
-{{- $dbsToDrop := list $dbSvc $dbApi $dbCell }}
+{{- $dbsToDrop := list $dbSvc $dbApi $dbPlacement $dbCell }}
 {{- $dbDropJob := dict "envAll" . "serviceName" $serviceName "dbsToDrop" $dbsToDrop -}}
 {{ $dbDropJob | include "helm-toolkit.manifests.job_db_drop_mysql" }}
 {{- end }}

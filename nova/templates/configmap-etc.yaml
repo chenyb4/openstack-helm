@@ -60,6 +60,10 @@ limitations under the License.
 {{- $_ := tuple "oslo_db_api" "internal" "nova" "mysql" . | include "helm-toolkit.endpoints.authenticated_endpoint_uri_lookup" | set .Values.conf.nova.api_database "connection" -}}
 {{- end -}}
 
+{{- if empty .Values.conf.nova.placement_database.connection -}}
+{{- $_ := tuple "oslo_db_placement" "internal" "nova" "mysql" . | include "helm-toolkit.endpoints.authenticated_endpoint_uri_lookup" | set .Values.conf.nova.placement_database "connection" -}}
+{{- end -}}
+
 {{- if empty .Values.conf.nova.cell0_database.connection -}}
 {{- $_ := tuple "oslo_db_cell0" "internal" "nova" "mysql" . | include "helm-toolkit.endpoints.authenticated_endpoint_uri_lookup" | set .Values.conf.nova.cell0_database "connection" -}}
 {{- end -}}
