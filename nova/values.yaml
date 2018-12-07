@@ -1495,7 +1495,7 @@ endpoints:
     host_fqdn_override:
       default: null
     path:
-      default: /
+      default: /placement
     scheme:
       default: 'http'
     port:
