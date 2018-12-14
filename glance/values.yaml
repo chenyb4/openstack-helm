@@ -18,7 +18,7 @@
 # name: value
 
 # radosgw, rbd, swift or pvc
-storage: swift
+storage: rbd
 
 labels:
   api:
@@ -226,8 +226,8 @@ conf:
       # via the endpoints section.
       bind_port: null
       workers: 1
-      enable_v1_api: False
-      enable_v2_registry: False
+      enable_v1_api: True
+      enable_v2_registry: True
     keystone_authtoken:
       auth_type: password
       auth_version: v3
@@ -865,9 +865,9 @@ manifests:
   configmap_bin: true
   configmap_etc: true
   deployment_api: true
-  deployment_registry: false
+  deployment_registry: true
   ingress_api: true
-  ingress_registry: false
+  ingress_registry: true
   job_bootstrap: true
   job_clean: true
   job_db_init: true
@@ -880,7 +880,7 @@ manifests:
   job_storage_init: true
   job_rabbit_init: true
   pdb_api: true
-  pdb_registry: false
+  pdb_registry: true
   pod_rally_test: true
   pvc_images: true
   secret_db: true
@@ -888,6 +888,6 @@ manifests:
   secret_keystone: true
   secret_rabbitmq: true
   service_ingress_api: true
-  service_ingress_registry: false
+  service_ingress_registry: true
   service_api: true
   service_registry: true
