@@ -26,7 +26,13 @@ pod:
 conf:
   cinder:
     DEFAULT:
-      backup_driver: cinder.backup.drivers.swift
+      backup_driver: cinder.backup.drivers.ceph
+  ceph:
+    pools:
+      backup:
+        crush_rule: replicated_rule
+      volume:
+        crush_rule: replicated_rule
 EOF
 helm upgrade --install cinder ./cinder \
   --namespace=openstack \
