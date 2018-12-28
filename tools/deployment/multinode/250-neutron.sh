@@ -40,9 +40,10 @@ pod:
 conf:
   neutron:
     DEFAULT:
-      l3_ha: False
+      l3_ha: True
+      router_distributed: True
       min_l3_agents_per_router: 1
-      max_l3_agents_per_router: 1
+      max_l3_agents_per_router: 3
       l3_ha_network_type: vxlan
       dhcp_agents_per_network: 1
   plugins:
@@ -52,8 +53,14 @@ conf:
     openvswitch_agent:
       agent:
         tunnel_types: vxlan
+        enable_distributed_routing: True
       ovs:
         bridge_mappings: public:br-ex
+  l3_agent:
+    DEFAULT:
+      agent_mode: dvr_snat
+      ovs_integration_bridge: br-int
+      interface_driver: neutron.agent.linux.interface.OVSInterfaceDriver
 EOF
 helm upgrade --install neutron ./neutron \
     --namespace=openstack \
