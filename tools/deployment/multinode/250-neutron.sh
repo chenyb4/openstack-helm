@@ -46,6 +46,12 @@ conf:
       max_l3_agents_per_router: 3
       l3_ha_network_type: vxlan
       dhcp_agents_per_network: 1
+      service_plugins: router, firewall
+    service_providers:
+      service_provider: FIREWALL:Iptables:neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver:default
+    fwaas:
+      driver: iptables
+      enabled: True
   plugins:
     ml2_conf:
       ml2_type_flat:
@@ -61,6 +67,20 @@ conf:
       agent_mode: dvr_snat
       ovs_integration_bridge: br-int
       interface_driver: neutron.agent.linux.interface.OVSInterfaceDriver
+    AGENT:
+      extensions: fwaas
+    fwaas:
+      driver: iptables
+      conntrack_driver: conntrack
+      agent_version: v2
+      enabled: True
+  fwaas_driver:
+    DEFAULT:
+    fwaas:
+      driver: neutron_fwaas.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver
+      enabled: True
+      agent_version: v2
+      conntrack_driver: conntrack
 EOF
 helm upgrade --install neutron ./neutron \
     --namespace=openstack \
