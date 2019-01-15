@@ -18,7 +18,7 @@
 # name: value
 
 storage: ceph
-
+nfs_server_export: 192.168.134.10:/data
 labels:
   api:
     node_selector_key: openstack-control-plane
@@ -728,7 +728,7 @@ conf:
       # NOTE(portdirect): the bind port should not be defined, and is manipulated
       # via the endpoints section.
       osapi_volume_listen_port: null
-      enabled_backends: "rbd1"
+      enabled_backends: "rbd1, nfs"
       # NOTE(portdirect): "cinder.backup.drivers.ceph"  and
       # "cinder.backup.drivers.posix" also supported
       backup_driver: "cinder.backup.drivers.ceph"
@@ -836,6 +836,10 @@ conf:
       rados_connect_timeout: -1
       rbd_user: cinder
       rbd_secret_uuid: 457eb676-33da-42ec-9a8c-9293d545c337
+    nfs:
+      volume_driver: cinder.volume.drivers.nfs.NfsDriver
+      nfs_shares_config: /tmp/nfs_shares
+      volume_backend_name: nfs1
   rally_tests:
     run_tempest: false
     tests:

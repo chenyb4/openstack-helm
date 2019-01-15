@@ -17,6 +17,14 @@ limitations under the License.
 */}}
 
 set -ex
+
+{{- if .Values.conf.backends.nfs.nfs_shares_config}}
+    NFS_Server={{.Values.nfs_server_export}}
+    NFS_SHARES_CONFIG={{.Values.conf.backends.nfs.nfs_shares_config}}
+    touch $NFS_SHARES_CONFIG
+    echo "$NFS_Server" > $NFS_SHARES_CONFIG
+{{- end}}
+
 exec cinder-volume \
      --config-file /etc/cinder/cinder.conf \
      --config-file /etc/cinder/conf/backends.conf
